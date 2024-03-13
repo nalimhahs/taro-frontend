@@ -23,7 +23,7 @@ COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
-RUN vite build
+RUN bun run build
 
 # copy production dependencies and source code into final image
 FROM base AS release
@@ -35,4 +35,4 @@ COPY --from=prerelease /usr/src/app/build build
 # run the app
 USER bun
 EXPOSE 3000/tcp
-ENTRYPOINT [ "vite", "preview" ]
+ENTRYPOINT [ "bun", "./build/index.js" ]
